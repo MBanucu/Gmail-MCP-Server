@@ -1,5 +1,27 @@
 # Gmail AutoAuth MCP Server
 
+> **Maintained fork — v1.1.12.** The upstream project
+> [`GongRZhe/Gmail-MCP-Server`](https://github.com/GongRZhe/Gmail-MCP-Server) was archived on
+> 2025-08-06 and is read-only; `@gongrzhe/server-gmail-autoauth-mcp` has not been published since
+> then and still ships the bug described below.
+>
+> This fork fixes it and is published as
+> **[`@mbanucu/server-gmail-autoauth-mcp`](https://www.npmjs.com/package/@mbanucu/server-gmail-autoauth-mcp)**:
+>
+> ```bash
+> npx -y @mbanucu/server-gmail-autoauth-mcp auth
+> # then in .agents/mcp.json / claude_desktop_config.json:
+> #   "command": "npx", "args": ["-y", "@mbanucu/server-gmail-autoauth-mcp"]
+> ```
+>
+> **Fixed in 1.1.12:** `list_filters` always answered `No filters found.` The Gmail API returns
+> the collection as `ListFiltersResponse.filter` (singular), but `listFilters()` read
+> `response.data.filters`, which is always `undefined`. `get_filter` was unaffected, so filters
+> could be created and fetched individually but never listed. Diff:
+> [`src/filter-manager.ts`](https://github.com/MBanucu/Gmail-MCP-Server/commit/) — one line,
+> `response.data.filter || response.data.filters || []`.
+
+
 A Model Context Protocol (MCP) server for Gmail integration in Claude Desktop with auto authentication support. This server enables AI assistants to manage Gmail through natural language interactions.
 
 ![](https://badge.mcpx.dev?type=server 'MCP Server')
