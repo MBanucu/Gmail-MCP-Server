@@ -1,6 +1,6 @@
 # Gmail AutoAuth MCP Server
 
-> **Maintained fork — v1.1.12.** The upstream project
+> **Maintained fork — v1.1.13.** The upstream project
 > [`GongRZhe/Gmail-MCP-Server`](https://github.com/GongRZhe/Gmail-MCP-Server) was archived on
 > 2025-08-06 and is read-only; `@gongrzhe/server-gmail-autoauth-mcp` has not been published since
 > then and still ships the bug described below.
@@ -20,12 +20,16 @@
 > could be created and fetched individually but never listed. Diff:
 > [`src/filter-manager.ts`](https://github.com/MBanucu/Gmail-MCP-Server/commit/) — one line,
 > `response.data.filter || response.data.filters || []`.
+>
+> **1.1.13:** metadata corrected for the fork — `author` is now the fork author
+> (`gongrzhe` moved to `contributors`), `license` matches the MIT text in `LICENSE`,
+> `engines` raised to Node 18, and every install command in this README points at
+> `@mbanucu/server-gmail-autoauth-mcp` instead of the abandoned upstream package.
 
 
 A Model Context Protocol (MCP) server for Gmail integration in Claude Desktop with auto authentication support. This server enables AI assistants to manage Gmail through natural language interactions.
 
 ![](https://badge.mcpx.dev?type=server 'MCP Server')
-[![smithery badge](https://smithery.ai/badge/@gongrzhe/server-gmail-autoauth-mcp)](https://smithery.ai/server/@gongrzhe/server-gmail-autoauth-mcp)
 
 
 ## Features
@@ -51,14 +55,6 @@ A Model Context Protocol (MCP) server for Gmail integration in Claude Desktop wi
 - Global credential storage for convenience
 
 ## Installation & Authentication
-
-### Installing via Smithery
-
-To install Gmail AutoAuth for Claude Desktop automatically via [Smithery](https://smithery.ai/server/@gongrzhe/server-gmail-autoauth-mcp):
-
-```bash
-npx -y @smithery/cli install @gongrzhe/server-gmail-autoauth-mcp --client claude
-```
 
 ### Installing Manually
 1. Create a Google Cloud Project and obtain credentials:
@@ -88,14 +84,14 @@ npx -y @smithery/cli install @gongrzhe/server-gmail-autoauth-mcp --client claude
    mv gcp-oauth.keys.json ~/.gmail-mcp/
 
    # Run authentication from anywhere
-   npx @gongrzhe/server-gmail-autoauth-mcp auth
+   npx @mbanucu/server-gmail-autoauth-mcp auth
    ```
 
    b. Local Authentication:
    ```bash
    # Place gcp-oauth.keys.json in your current directory
    # The file will be automatically copied to global config
-   npx @gongrzhe/server-gmail-autoauth-mcp auth
+   npx @mbanucu/server-gmail-autoauth-mcp auth
    ```
 
    The authentication process will:
@@ -117,7 +113,7 @@ npx -y @smithery/cli install @gongrzhe/server-gmail-autoauth-mcp --client claude
     "gmail": {
       "command": "npx",
       "args": [
-        "@gongrzhe/server-gmail-autoauth-mcp"
+        "@mbanucu/server-gmail-autoauth-mcp"
       ]
     }
   }
@@ -165,24 +161,24 @@ docker run -i --rm \
 For cloud server environments (like n8n), you can specify a custom callback URL during authentication:
 
 ```bash
-npx @gongrzhe/server-gmail-autoauth-mcp auth https://gmail.gongrzhe.com/oauth2callback
+npx @mbanucu/server-gmail-autoauth-mcp auth https://gmail.example.com/oauth2callback
 ```
 
 #### Setup Instructions for Cloud Environment
 
 1. **Configure Reverse Proxy:**
    - Set up your n8n container to expose a port for authentication
-   - Configure a reverse proxy to forward traffic from your domain (e.g., `gmail.gongrzhe.com`) to this port
+   - Configure a reverse proxy to forward traffic from your domain (e.g., `gmail.example.com`) to this port
 
 2. **DNS Configuration:**
    - Add an A record in your DNS settings to resolve your domain to your cloud server's IP address
 
 3. **Google Cloud Platform Setup:**
-   - In your Google Cloud Console, add your custom domain callback URL (e.g., `https://gmail.gongrzhe.com/oauth2callback`) to the authorized redirect URIs list
+   - In your Google Cloud Console, add your custom domain callback URL (e.g., `https://gmail.example.com/oauth2callback`) to the authorized redirect URIs list
 
 4. **Run Authentication:**
    ```bash
-   npx @gongrzhe/server-gmail-autoauth-mcp auth https://gmail.gongrzhe.com/oauth2callback
+   npx @mbanucu/server-gmail-autoauth-mcp auth https://gmail.example.com/oauth2callback
    ```
 
 5. **Configure in your application:**
@@ -192,7 +188,7 @@ npx @gongrzhe/server-gmail-autoauth-mcp auth https://gmail.gongrzhe.com/oauth2ca
        "gmail": {
          "command": "npx",
          "args": [
-           "@gongrzhe/server-gmail-autoauth-mcp"
+           "@mbanucu/server-gmail-autoauth-mcp"
          ]
        }
      }

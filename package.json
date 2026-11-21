@@ -1,6 +1,6 @@
 {
   "name": "@mbanucu/server-gmail-autoauth-mcp",
-  "version": "1.1.12",
+  "version": "1.1.13",
   "description": "Gmail MCP server with auto authentication support (maintained fork of @gongrzhe/server-gmail-autoauth-mcp; fixes list_filters)",
   "type": "module",
   "main": "dist/index.js",
@@ -31,8 +31,8 @@
     "fork",
     "gmail-mcp"
   ],
-  "author": "gongrzhe",
-  "license": "ISC",
+  "author": "Michael Banucu",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/MBanucu/Gmail-MCP-Server.git"
@@ -45,7 +45,7 @@
     "access": "public"
   },
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=18.0.0"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^0.4.0",
@@ -63,5 +63,11 @@
     "@types/node": "^20.10.5",
     "@types/nodemailer": "^6.4.17",
     "typescript": "^5.3.3"
-  }
+  },
+  "contributors": [
+    {
+      "name": "gongrzhe",
+      "url": "https://github.com/GongRZhe/Gmail-MCP-Server"
+    }
+  ]
 }
