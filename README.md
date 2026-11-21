@@ -1,30 +1,41 @@
 # Gmail AutoAuth MCP Server
 
-> **Maintained fork — v1.1.13.** The upstream project
-> [`GongRZhe/Gmail-MCP-Server`](https://github.com/GongRZhe/Gmail-MCP-Server) was archived on
-> 2025-08-06 and is read-only; `@gongrzhe/server-gmail-autoauth-mcp` has not been published since
-> then and still ships the bug described below.
+> ## ⚠️ This repository is archived and superseded
 >
-> This fork fixes it and is published as
-> **[`@mbanucu/server-gmail-autoauth-mcp`](https://www.npmjs.com/package/@mbanucu/server-gmail-autoauth-mcp)**:
+> **Use [`ArtyMcLabin/Gmail-MCP-Server`](https://github.com/ArtyMcLabin/Gmail-MCP-Server) instead**
+> (257 ★, actively maintained, npm: `@artymclabin/gmail-mcp`). It is the fork that
+> [issue #99](https://github.com/GongRZhe/Gmail-MCP-Server/issues/99) in the original project
+> already points people to, it carries additional fixes (reply threading, send-as aliases),
+> and it independently fixed the same `list_filters` bug this fork exists for.
 >
-> ```bash
-> npx -y @mbanucu/server-gmail-autoauth-mcp auth
-> # then in .agents/mcp.json / claude_desktop_config.json:
-> #   "command": "npx", "args": ["-y", "@mbanucu/server-gmail-autoauth-mcp"]
-> ```
+> This fork was archived on 2026-11-21. It is kept as a record of two findings:
 >
-> **Fixed in 1.1.12:** `list_filters` always answered `No filters found.` The Gmail API returns
-> the collection as `ListFiltersResponse.filter` (singular), but `listFilters()` read
+> | Finding | Status in ArtyMcLabin's fork |
+> | --- | --- |
+> | `list_filters` read `response.data.filters`; the API returns `data.filter` (singular) | **already fixed** |
+> | `"bin": {"gmail-mcp": "./dist/index.js"}` — npm 11 strips the executable on publish | still present (as of 1.2.4) |
+> | `"engines": {"node": ">=14.0.0"}` — `open@10` and the ESM setup need Node 18 | still present (as of 1.2.4) |
+> | `"license": "ISC"` vs an MIT `LICENSE` file | already MIT there |
+>
+> The published package `@mbanucu/server-gmail-autoauth-mcp` stays installable but receives no
+> further updates. The last release, 1.1.13, is identical in behaviour to the fixed upstream line.
+>
+> If you maintain a fork of the legacy project, the two `package.json` rows above are worth
+> copying — they do not fail loudly, they fail at `npx` time for your users.
+
+
+> **History — what this fork changed (v1.1.11 → 1.1.13).**
+>
+> The upstream package `@gongrzhe/server-gmail-autoauth-mcp` has not been published since
+> 2025-08-06. `list_filters` always answered `No filters found.`; the Gmail API returns the
+> collection as `ListFiltersResponse.filter` (singular), but `listFilters()` read
 > `response.data.filters`, which is always `undefined`. `get_filter` was unaffected, so filters
-> could be created and fetched individually but never listed. Diff:
-> [`src/filter-manager.ts`](https://github.com/MBanucu/Gmail-MCP-Server/commit/) — one line,
+> could be created and fetched individually but never listed. Fix, one line:
 > `response.data.filter || response.data.filters || []`.
 >
-> **1.1.13:** metadata corrected for the fork — `author` is now the fork author
-> (`gongrzhe` moved to `contributors`), `license` matches the MIT text in `LICENSE`,
-> `engines` raised to Node 18, and every install command in this README points at
-> `@mbanucu/server-gmail-autoauth-mcp` instead of the abandoned upstream package.
+> 1.1.13 additionally corrected the fork's metadata: `author`, `license: MIT` (the `LICENSE`
+> file was always MIT), `engines: node >=18`, and `bin` without the `./` prefix that npm 11
+> strips on publish.
 
 
 A Model Context Protocol (MCP) server for Gmail integration in Claude Desktop with auto authentication support. This server enables AI assistants to manage Gmail through natural language interactions.
