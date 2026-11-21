@@ -67,7 +67,10 @@ export async function listFilters(gmail: any) {
             userId: 'me',
         });
 
-        const filters = response.data.filters || [];
+        // Gmail API returns the collection under `data.filter` (singular),
+        // see ListFiltersResponse. `data.filters` is kept as a fallback for
+        // clients/forks that expose the plural key.
+        const filters = response.data.filter || response.data.filters || [];
         
         return {
             filters,
